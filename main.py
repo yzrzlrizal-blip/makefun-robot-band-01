@@ -10,8 +10,15 @@ import sys
 
 ENTRY = "The Roomba Rumblers \u2014 hit single \u2018Suck It Up (Buttercup)\u2019"
 
+# The gate: /output/entry.txt must be UTF-8 text of 1 to 200 characters.
+MIN_CHARS = 1
+MAX_CHARS = 200
+
 
 def main() -> int:
+    if not MIN_CHARS <= len(ENTRY) <= MAX_CHARS or not ENTRY.strip():
+        print("entry fails the 1-200 character gate", file=sys.stderr)
+        return 1
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
